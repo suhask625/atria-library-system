@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - Atria Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-bottom: 3rem;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .header-text h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-text p {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .user-usn {
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .profile-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .profile-details {
+            flex: 1;
+        }
+
+        .profile-label {
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+
+        .profile-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            border-top: 4px solid;
+        }
+
+        .book-card:nth-child(4n+1) { border-color: #3b82f6; }
+        .book-card:nth-child(4n+2) { border-color: #10b981; }
+        .book-card:nth-child(4n+3) { border-color: #f59e0b; }
+        .book-card:nth-child(4n+4) { border-color: #ef4444; }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .book-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .book-icon {
+            width: 50px;
+            height: 50px;
+            background: #f3f4f6;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+
+        .book-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .book-status.available {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .book-status.unavailable {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .book-title {
+            font-size: 1.125rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-author {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-category {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .transactions-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        thead th {
+            padding: 1rem;
+            text-align: left;
+            color: white;
+            font-weight: 600;
+        }
+
+        thead th:first-child {
+            border-top-left-radius: 12px;
+        }
+
+        thead th:last-child {
+            border-top-right-radius: 12px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        tbody td {
+            padding: 1rem;
+            color: #374151;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-badge.issued {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-badge.overdue {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-badge.returned {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .fine-amount {
+            font-weight: bold;
+            color: #ef4444;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+
+        .no-data i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: white;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .user-section {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .user-info {
+                text-align: center;
+            }
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="header-text">
+                        <h1>ATRIA INSTITUTE OF TECHNOLOGY</h1>
+                        <p>Library Management System - Student Portal</p>
+                    </div>
+                </div>
+                <div class="user-section">
+                    <div class="user-info">
+                        <div class="user-name" id="studentName"></div>
+                        <div class="user-usn" id="studentUSN"></div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <h2 style="font-size: 1.5rem; color: #1f2937; margin-bottom: 0.5rem;">My Profile</h2>
+            <div class="profile-grid">
+                <div class="profile-item">
+                    <div class="profile-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-details">
+                        <div class="profile-label">Name</div>
+                        <div class="profile-value" id="profileName"></div>
+                    </div>
+                </div>
+                <div class="profile-item">
+                    <div class="profile-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="profile-details">
+                        <div class="profile-label">USN</div>
+                        <div class="profile-value" id="profileUSN"></div>
+                    </div>
+                </div>
+                <div class="profile-item">
+                    <div class="profile-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="profile-details">
+                        <div class="profile-label">Department</div>
+                        <div class="profile-value" id="profileDept"></div>
+                    </div>
+                </div>
+                <div class="profile-item">
+                    <div class="profile-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="profile-details">
+                        <div class="profile-label">Email</div>
+                        <div class="profile-value" id="profileEmail"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Available Books -->
+        <h2 class="section-title">
+            <i class="fas fa-book"></i>
+            Available Books
+        </h2>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="bookSearch" placeholder="Search books by title, author, or category..." oninput="searchBooks()">
+        </div>
+        <div id="booksGrid" class="books-grid"></div>
+
+        <!-- My Transactions -->
+        <h2 class="section-title" style="margin-top: 3rem;">
+            <i class="fas fa-history"></i>
+            My Borrowed Books
+        </h2>
+        <div class="transactions-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Book Title</th>
+                        <th>Issue Date</th>
+                        <th>Due Date</th>
+                        <th>Return Date</th>
+                        <th>Fine</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="transactionsTable"></tbody>
+            </table>
+            <div id="noTransactions" class="no-data" style="display: none;">
+                <i class="fas fa-book-open"></i>
+                <p>No books borrowed yet</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Check authentication
+        const user = JSON.parse(localStorage.getItem('user'));
+        const role = localStorage.getItem('role');
+
+        if (!user || role !== 'student') {
+            window.location.href = '/';
+        }
+
+        let allBooks = [];
+
+        // Display student info
+        document.getElementById('studentName').textContent = user.name;
+        document.getElementById('studentUSN').textContent = user.usn;
+        document.getElementById('profileName').textContent = user.name;
+        document.getElementById('profileUSN').textContent = user.usn;
+        document.getElementById('profileDept').textContent = user.department;
+        document.getElementById('profileEmail').textContent = user.email;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBooks();
+            loadTransactions();
+        });
+
+        // Logout
+        function logout() {
+            localStorage.removeItem('user');
+            localStorage.removeItem('role');
+            window.location.href = '/';
+        }
+
+        // Load Books
+        async function loadBooks() {
+            try {
+                const response = await fetch('/api/books');
+                allBooks = await response.json();
+                renderBooks(allBooks);
+            } catch (error) {
+                console.error('Error loading books:', error);
+            }
+        }
+
+        function renderBooks(books) {
+            const grid = document.getElementById('booksGrid');
+            const availableBooks = books.filter(book => book.available > 0);
+            
+            if (availableBooks.length === 0) {
+                grid.innerHTML = '<div class="no-data"><i class="fas fa-book"></i><p>No books available</p></div>';
+                return;
+            }
+
+            grid.innerHTML = availableBooks.map(book => `
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <span class="book-status available">${book.available} Available</span>
+                    </div>
+                    <h3 class="book-title">${book.title}</h3>
+                    <p class="book-author">by ${book.author}</p>
+                    <span class="book-category">${book.category}</span>
+                </div>
+            `).join('');
+        }
+
+        function searchBooks() {
+            const query = document.getElementById('bookSearch').value.toLowerCase();
+            const filtered = allBooks.filter(book =>
+                book.available > 0 && (
+                    book.title.toLowerCase().includes(query) ||
+                    book.author.toLowerCase().includes(query) ||
+                    book.category.toLowerCase().includes(query)
+                )
+            );
+            renderBooks(filtered);
+        }
+
+        // Load Transactions
+        async function loadTransactions() {
+            try {
+                const response = await fetch(`/api/transactions/student/${user.id}`);
+                const transactions = await response.json();
+                const tbody = document.getElementById('transactionsTable');
+                const noData = document.getElementById('noTransactions');
+
+                if (transactions.length === 0) {
+                    tbody.parentElement.parentElement.style.display = 'none';
+                    noData.style.display = 'block';
+                    return;
+                }
+
+                tbody.innerHTML = transactions.map(t => {
+                    const status = getTransactionStatus(t);
+                    return `
+                        <tr>
+                            <td>${t.bookTitle}</td>
+                            <td>${t.issueDate}</td>
+                            <td>${t.dueDate}</td>
+                            <td>${t.returnDate || '-'}</td>
+                            <td class="${t.fine > 0 ? 'fine-amount' : ''}">₹${t.fine}</td>
+                            <td><span class="status-badge ${status}">${status.charAt(0).toUpperCase() + status.slice(1)}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error loading transactions:', error);
+            }
+        }
+
+        function getTransactionStatus(transaction) {
+            if (transaction.status === 'returned') return 'returned';
+            const dueDate = new Date(transaction.dueDate);
+            const today = new Date();
+            return dueDate < today ? 'overdue' : 'issued';
+        }
+    </script>
+</body>
+</html>

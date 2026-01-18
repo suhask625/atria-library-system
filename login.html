@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atria Library - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .login-container {
+            display: flex;
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-left {
+            flex: 1;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-left::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveBackground 20s linear infinite;
+        }
+
+        @keyframes moveBackground {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .college-logo {
+            width: 150px;
+            height: 150px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .college-logo i {
+            font-size: 4rem;
+            color: #1e3a8a;
+        }
+
+        .college-info {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .college-info h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .college-info p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .college-info .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .login-right {
+            flex: 1;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .login-form {
+            display: none;
+        }
+
+        .login-form.active {
+            display: block;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #4b5563;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 1.5rem;
+        }
+
+        .forgot-password a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .alert.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .alert.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .demo-credentials {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 12px;
+            font-size: 0.85rem;
+        }
+
+        .demo-credentials strong {
+            color: #1f2937;
+        }
+
+        .demo-credentials p {
+            margin: 0.5rem 0;
+            color: #6b7280;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+
+            .login-left {
+                padding: 2rem;
+            }
+
+            .college-logo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .college-logo i {
+                font-size: 3rem;
+            }
+
+            .college-info h1 {
+                font-size: 1.3rem;
+            }
+
+            .college-info p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-left">
+            <div class="college-logo">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="college-info">
+                <h1>ATRIA INSTITUTE OF TECHNOLOGY</h1>
+                <p>Library Management System</p>
+                <p class="subtitle">Knowledge is Power</p>
+            </div>
+        </div>
+
+        <div class="login-right">
+            <div class="login-tabs">
+                <button class="tab-btn active" onclick="switchTab('student')">
+                    <i class="fas fa-user-graduate"></i>
+                    Student
+                </button>
+                <button class="tab-btn" onclick="switchTab('admin')">
+                    <i class="fas fa-user-shield"></i>
+                    Admin
+                </button>
+            </div>
+
+            <div id="alert" class="alert"></div>
+
+            <!-- Student Login Form -->
+            <form id="studentForm" class="login-form active" onsubmit="handleLogin(event, 'student')">
+                <h2 class="form-title">Student Login</h2>
+                <div class="form-group">
+                    <label>University Serial Number (USN)</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" id="studentUsn" placeholder="Enter your USN" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="studentPassword" placeholder="Enter your password" required>
+                    </div>
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+                
+                <div class="demo-credentials">
+                    <strong>Demo Credentials:</strong>
+                    <p>USN: 1AT20CS001</p>
+                    <p>Password: student123</p>
+                </div>
+            </form>
+
+            <!-- Admin Login Form -->
+            <form id="adminForm" class="login-form" onsubmit="handleLogin(event, 'admin')">
+                <h2 class="form-title">Admin Login</h2>
+                <div class="form-group">
+                    <label>Username</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="adminUsername" placeholder="Enter username" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="adminPassword" placeholder="Enter password" required>
+                    </div>
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+                
+                <div class="demo-credentials">
+                    <strong>Demo Credentials:</strong>
+                    <p>Username: admin</p>
+                    <p>Password: admin123</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            const studentTab = document.querySelector('.tab-btn:nth-child(1)');
+            const adminTab = document.querySelector('.tab-btn:nth-child(2)');
+            const studentForm = document.getElementById('studentForm');
+            const adminForm = document.getElementById('adminForm');
+            const alert = document.getElementById('alert');
+
+            alert.style.display = 'none';
+
+            if (tab === 'student') {
+                studentTab.classList.add('active');
+                adminTab.classList.remove('active');
+                studentForm.classList.add('active');
+                adminForm.classList.remove('active');
+            } else {
+                adminTab.classList.add('active');
+                studentTab.classList.remove('active');
+                adminForm.classList.add('active');
+                studentForm.classList.remove('active');
+            }
+        }
+
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = `alert ${type}`;
+            alert.style.display = 'block';
+
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+
+        async function handleLogin(event, type) {
+            event.preventDefault();
+            
+            let credentials;
+            if (type === 'student') {
+                credentials = {
+                    usn: document.getElementById('studentUsn').value,
+                    password: document.getElementById('studentPassword').value
+                };
+            } else {
+                credentials = {
+                    username: document.getElementById('adminUsername').value,
+                    password: document.getElementById('adminPassword').value
+                };
+            }
+
+            try {
+                const response = await fetch(`/api/login/${type}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(credentials)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    localStorage.setItem('role', data.role);
+                    showAlert('Login successful! Redirecting...', 'success');
+                    
+                    setTimeout(() => {
+                        if (type === 'student') {
+                            window.location.href = '/student';
+                        } else {
+                            window.location.href = '/admin';
+                        }
+                    }, 1000);
+                } else {
+                    showAlert(data.message, 'error');
+                }
+            } catch (error) {
+                showAlert('An error occurred. Please try again.', 'error');
+                console.error('Login error:', error);
+            }
+        }
+
+        // Check if already logged in
+        window.onload = function() {
+            const user = localStorage.getItem('user');
+            const role = localStorage.getItem('role');
+            
+            if (user && role) {
+                if (role === 'student') {
+                    window.location.href = '/student';
+                } else {
+                    window.location.href = '/admin';
+                }
+            }
+        };
+    </script>
+</body>
+</html>
